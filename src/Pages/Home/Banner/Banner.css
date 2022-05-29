@@ -1,0 +1,7 @@
+@media only screen and (max-width: 900px) {
+    /* For mobile phones: */
+    .alignCenter{
+      text-align: center;
+      margin: 15px 0px 25px 0px;
+    }
+  }
