@@ -6,7 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import './Service.css'
 
 const Service = (props) => {
-    console.log(props)
     const {serviceName, serviceDescription, image} = props.service;
     return (
         <div>
@@ -19,10 +18,10 @@ const Service = (props) => {
                     alt="green iguana"
                  />
                 <CardContent>
-                    <Typography variant="h5" textTransform='uppercase' fontWeight='600' component="div">
+                    <Typography variant="h5" textTransform='uppercase' fontWeight='600' component="div" sx={{ wordWrap: "break-word" }}>
                         {serviceName}
                     </Typography>
-                    <Typography variant="p">
+                    <Typography variant="p" sx={{ wordWrap: "break-word" }}>
                         {serviceDescription}
                     </Typography>
                 </CardContent>

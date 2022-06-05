@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import Testimonial from "../Testimonial/Testimonial";
 import Slider from "react-slick/lib/slider";
-import axios from "axios";
 
 const Testimonials = () => {
   const [allReviews, setAllReviews] = useState([]);
@@ -45,7 +44,7 @@ const Testimonials = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/reviews", {
+    fetch("https://tranquil-bastion-41948.herokuapp.com/reviews", {
       method: "GET",
       headers: {
         "content-type": "application/json",

@@ -46,7 +46,7 @@ const MakeAdmin = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const user = {email};
-    const url = "http://localhost:5000/users/admin";
+    const url = "https://tranquil-bastion-41948.herokuapp.com/users/admin";
     fetch(url, {
       method: 'PUT',
       headers: {

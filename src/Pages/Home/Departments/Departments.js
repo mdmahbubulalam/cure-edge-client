@@ -79,8 +79,6 @@ const Departments = () => {
       }
     event.preventDefault();
   }
-
-  console.log(alignment);
     return (
         <Container sx={{ flexGrow: 1, padding:'60px 0 60px 0'}} id='departments'>
             <Typography variant="h3" textAlign='center' component="div" marginBottom="50px" textTransform='uppercase' fontWeight='700'>

@@ -76,7 +76,7 @@ const ManageHospitals = () => {
   };
 
   useEffect(()=>{
-    axios.get("http://localhost:5000/hospitals").then(function (res) {
+    axios.get("https://tranquil-bastion-41948.herokuapp.com/hospitals").then(function (res) {
       if (res.data) {
         res.data.sort((a, b) => (new Date(a) < new Date(b) ? 1 : -1));
         setAllHospitals(res.data);
@@ -87,7 +87,7 @@ const ManageHospitals = () => {
   
 
   const handleDelete = (hospitalId) => {
-    const url = `http://localhost:5000/services/${hospitalId}`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/hospitals/${hospitalId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allHospitals.filter((allHospital) => allHospital._id !== hospitalId);
@@ -133,7 +133,7 @@ const ManageHospitals = () => {
             severity="success"
             sx={{ width: "100%" }}
           >
-            Service deleted successfully
+            Hospital deleted successfully
           </Alert>
         </Snackbar>
         <TableContainer component={Paper}>
@@ -174,7 +174,7 @@ const ManageHospitals = () => {
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
           <DialogTitle>Edit form Data</DialogTitle>
           <DialogContent>
-            <EditHospital hospitalId={hospitalId} handleDialogClose={handleDialogClose}/>
+            <EditHospital hospitalId={hospitalId}/>
           </DialogContent>
           <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>

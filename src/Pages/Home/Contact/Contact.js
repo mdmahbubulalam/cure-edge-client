@@ -46,7 +46,7 @@ const Contact = () => {
     };
     
     axios
-      .post("http://localhost:5000/addReview", formData)
+      .post("https://tranquil-bastion-41948.herokuapp.com/addReview", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setSuccessMessage("Thanks for the review.");

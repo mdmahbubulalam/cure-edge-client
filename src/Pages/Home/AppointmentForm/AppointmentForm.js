@@ -4,16 +4,12 @@ import {
   Container,
   createTheme,
   FormControl,
-  FormControlLabel,
   FormLabel,
   Grid,
-  Input,
   InputLabel,
   MenuItem,
-  Radio,
   RadioGroup,
   Select,
-  TextareaAutosize,
   TextField,
   ThemeProvider,
   Typography,
@@ -27,24 +23,26 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import Alert from "@mui/material/Alert";
 
 const AppointmentForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [chooseService, setChooseService] = useState("");
   const [chooseHospital, setChooseHospital] = useState("");
-  const [dateTimeValue, setDateTimeValue] = useState(new Date());
+  const [singleUser, setSingleUser] = useState([]);
+  const [hospitals, setHospitals] = useState([]);
+  const date = new Date();
+  let localDate = date.toLocaleString();
+  const [dateTimeValue, setDateTimeValue] = useState(localDate); 
 
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors },
   } = useForm();
 
   let { user } = useAuth();
-
-  
 
   const handleChooseService = (event) => {
     setChooseService(event.target.value);
@@ -56,27 +54,40 @@ const AppointmentForm = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/services").then(function (res) {
-      if (res.data) {
-        setServices(res.data);
-      }
-    });
+    axios
+      .get("https://tranquil-bastion-41948.herokuapp.com/services")
+      .then(function (res) {
+        if (res.data) {
+          setServices(res.data);
+        }
+      });
   }, []);
 
+  useEffect(()=>{
+    fetch(`https://tranquil-bastion-41948.herokuapp.com/singleUser/${user.email}`,{
+      method:'GET',
+      headers:{
+        'content-type' : 'application/json',
+        //'authorization' : `Bearer ${localStorage.getItem('idToken')}`
+      }
+    })
+    .then( (res) => res.json())
+    .then( data => {
+      setSingleUser(data);
+    })
+  },[])
 
-  const [hospitals, setHospitals] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/hospitals").then(function (res) {
-      if (res.data) {
-        setHospitals(res.data);
-      }
-    });
+    axios
+      .get("https://tranquil-bastion-41948.herokuapp.com/hospitals")
+      .then(function (res) {
+        if (res.data) {
+          setHospitals(res.data);
+        }
+      });
   }, []);
 
- 
   const onSubmit = (data) => {
-  
-    
     const formData = {
       patientName: data.patientName,
       email: data.email,
@@ -88,12 +99,15 @@ const AppointmentForm = () => {
       symptoms: data.symptoms,
       address: data.address,
       dateTime: dateTimeValue,
-      serviceCharge:data.serviceCharge,
+      serviceCharge: data.serviceCharge,
       status: "Pending",
     };
-    
+
     axios
-      .post("http://localhost:5000/addAppoinment", formData)
+      .post(
+        "https://tranquil-bastion-41948.herokuapp.com/addAppoinment",
+        formData
+      )
       .then(function (res) {
         if (res.data.insertedId) {
           setSuccessMessage("Appoinment booked successfully");
@@ -111,7 +125,7 @@ const AppointmentForm = () => {
   useEffect(() => {
     setTimeout(() => {
       setSuccessMessage("");
-    }, 5000);
+    }, 10000);
   });
 
   const theme = createTheme({
@@ -150,7 +164,7 @@ const AppointmentForm = () => {
       </Typography>
       <Container>
         <Box sx={{ width: "100%" }}>
-          {user ? (
+          {user?.email ? (
             <Grid container spacing={{ xs: 2, md: 2 }}>
               <Grid
                 item
@@ -172,17 +186,23 @@ const AppointmentForm = () => {
                     component="div"
                     sx={{ m: 1, color: "green" }}
                   >
-                    {successMessage}
+                    <Alert severity="success">{successMessage}</Alert>
                   </Typography>
                 )}
-                <form onSubmit={handleSubmit(onSubmit)} style={{backgroundColor:'#F2FBFF', padding:'25px', borderRadius:'10px'}}>
-                
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  style={{
+                    backgroundColor: "#F2FBFF",
+                    padding: "25px",
+                    borderRadius: "10px",
+                  }}
+                >
                   <FormControl
                     variant="standard"
                     sx={{ mt: 2, minWidth: "100%" }}
                   >
                     <TextField
-                      value={user && user.displayName}
+                      value={user?.displayName || singleUser?.displayName}
                       type="text"
                       {...register("patientName", {
                         required: "Patient Name is Required",
@@ -273,6 +293,14 @@ const AppointmentForm = () => {
                       }}
                       {...register("age", {
                         required: "Age is Required",
+                        min: {
+                          value: 1,
+                          message: "Minimum Required length is 1",
+                        },
+                        max: {
+                          value: 120,
+                          message: "Maximum allowed length is 120",
+                        },
                         pattern: {
                           value: /^[0-9]*$/,
                           message: "Only numbers are allowed",
@@ -360,23 +388,19 @@ const AppointmentForm = () => {
                       </small>
                     )}
                   </FormControl>
-                
-                  
-                  {services.map(service => service.serviceName === chooseService &&
-                  <FormControl
-                    sx={{ display:'none' }}
-                  >
-                    <TextField
-                    
-                      type="text"
-                      {...register("serviceCharge")}
-                      value= {service.serviceCharge }
-                    />
-              
-                  </FormControl>
+
+                  {services.map(
+                    (service) =>
+                      service.serviceName === chooseService && (
+                        <FormControl sx={{ display: "none" }}>
+                          <TextField
+                            type="text"
+                            {...register("serviceCharge")}
+                            value={service.serviceCharge}
+                          />
+                        </FormControl>
+                      )
                   )}
-         
-                  
 
                   <FormControl sx={{ mt: 2, minWidth: "100%" }}>
                     <InputLabel>Choose Hospital</InputLabel>

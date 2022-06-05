@@ -74,7 +74,7 @@ const ManageDoctors = () => {
   };
 
   useEffect(()=>{
-    axios.get("http://localhost:5000/doctors").then(function (res) {
+    axios.get("https://tranquil-bastion-41948.herokuapp.com/doctors").then(function (res) {
       if (res.data) {
         res.data.sort((a, b) => (new Date(a) < new Date(b) ? 1 : -1));
         setAllDoctors(res.data);
@@ -85,7 +85,7 @@ const ManageDoctors = () => {
   
 
   const handleDelete = (id) => {
-    const url = `http://localhost:5000/doctors/${id}`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/doctors/${id}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allDoctors.filter((doctor) => doctor._id !== id);
@@ -186,7 +186,7 @@ const ManageDoctors = () => {
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
           <DialogTitle>Edit form Data</DialogTitle>
           <DialogContent>
-            <EditDoctor doctorId={doctorId} handleDialogClose={handleDialogClose}/>
+            <EditDoctor doctorId={doctorId}/>
           </DialogContent>
           <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>

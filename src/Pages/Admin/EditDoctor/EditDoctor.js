@@ -17,7 +17,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const EditDoctor = (props) => {
   const doctorId = props.doctorId;
-  const [doctorName, setDoctorName] = useState('');
+  const [doctorName, setDoctorName] = useState("");
   const [facebookLink, setFacebookLink] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
   const [linkedInLink, setLinkedInLink] = useState("");
@@ -33,7 +33,7 @@ const EditDoctor = (props) => {
   };
 
   useEffect(() => {
-    const url = `http://localhost:5000/doctors/${doctorId}`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/doctors/${doctorId}`;
     axios.get(url).then((res) => {
       if (res.data) {
         setDoctorName(res.data.doctorName);
@@ -63,8 +63,8 @@ const EditDoctor = (props) => {
       description,
       image: imgUrl,
     };
-    
-    const url = `http://localhost:5000/doctors/${doctorId}`;
+
+    const url = `https://tranquil-bastion-41948.herokuapp.com/doctors/${doctorId}`;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -75,8 +75,8 @@ const EditDoctor = (props) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
+          window.location.reload(false)
           setSuccessAlertOpen(true);
-          setDoctorName(data.doctorName)
         }
       });
   };
@@ -204,7 +204,11 @@ const EditDoctor = (props) => {
         <br />
         <FormControl variant="standard" sx={{ mt: 2 }}>
           <ThemeProvider theme={theme}>
-            <Button type="submit" variant="contained" color="info">
+            <Button
+              type="submit"
+              variant="contained"
+              color="info"
+            >
               Edit Doctor's Info
             </Button>
           </ThemeProvider>

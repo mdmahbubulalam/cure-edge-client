@@ -48,7 +48,7 @@ const AddHospital = () => {
       hospitalName: data.hospitalName,
     };
     axios
-      .post("http://localhost:5000/addHospital", formData)
+      .post("https://tranquil-bastion-41948.herokuapp.com/addHospital", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setOpen(true);

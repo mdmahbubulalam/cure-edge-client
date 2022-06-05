@@ -72,7 +72,7 @@ const ManageServices = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/services").then(function (res) {
+    axios.get("https://tranquil-bastion-41948.herokuapp.com/services").then(function (res) {
       if (res.data) {
         res.data.sort((a, b) => (new Date(a) < new Date(b) ? 1 : -1));
         setAllServices(res.data);
@@ -81,7 +81,7 @@ const ManageServices = () => {
   }, []);
 
   const handleDelete = (serviceId) => {
-    const url = `http://localhost:5000/services/${serviceId}`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/services/${serviceId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allServices.filter(
@@ -185,7 +185,6 @@ const ManageServices = () => {
           <DialogContent>
             <EditService
               serviceId={serviceId}
-              handleDialogClose={handleDialogClose}
             />
           </DialogContent>
           <DialogActions>

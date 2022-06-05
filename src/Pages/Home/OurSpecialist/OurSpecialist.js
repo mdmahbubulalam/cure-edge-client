@@ -21,10 +21,10 @@ const OurSpecialist = (props) => {
                 alt="green iguana"
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" textTransform='uppercase'  component="div">
+                <Typography gutterBottom variant="h5" textTransform='uppercase'  component="div" sx={{ wordWrap: "break-word" }}>
                     {doctorName}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ wordWrap: "break-word" }}>
                     {description}
                 </Typography>
             </CardContent>

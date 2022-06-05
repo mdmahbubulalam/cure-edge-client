@@ -81,7 +81,7 @@ const ManageAppoinments = () => {
 
 
   useEffect(()=>{
-    fetch("http://localhost:5000/appoinments",{
+    fetch("https://tranquil-bastion-41948.herokuapp.com/appoinments",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -96,7 +96,7 @@ const ManageAppoinments = () => {
   },[])
 
   const handleDelete = (appoinmentId) => {
-    const url = `http://localhost:5000/appoinments/${appoinmentId}`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/appoinments/${appoinmentId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allAppoinments.filter(
@@ -107,6 +107,8 @@ const ManageAppoinments = () => {
       }
     });
   };
+
+  
 
   let count = 1;
   const [open, setOpen] = React.useState(false);
@@ -130,7 +132,7 @@ const ManageAppoinments = () => {
 
     const modifiedStatus = { id, status };
 
-    const url = `http://localhost:5000/updateAppoinmentStatus`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/updateAppoinmentStatus`;
     fetch(url, {
       method: "PATCH",
       headers: {

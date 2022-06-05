@@ -22,7 +22,7 @@ const Admin = () => {
   const appoinmentDone = [];
 
   useEffect(()=>{
-    fetch("http://localhost:5000/appoinments",{
+    fetch("https://tranquil-bastion-41948.herokuapp.com/appoinments",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -37,7 +37,7 @@ const Admin = () => {
   },[])
 
   useEffect(()=>{
-    fetch("http://localhost:5000/users",{
+    fetch("https://tranquil-bastion-41948.herokuapp.com/users",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',

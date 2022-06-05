@@ -85,7 +85,7 @@ const ManageUsers = () => {
   };
 
   useEffect(()=>{
-    fetch("http://localhost:5000/users",{
+    fetch("https://tranquil-bastion-41948.herokuapp.com/users",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -108,7 +108,7 @@ const ManageUsers = () => {
 
     const modifiedStatus = { email, role };
 
-    const url = `http://localhost:5000/users/role`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/users/role`;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -121,7 +121,7 @@ const ManageUsers = () => {
   
 
   const handleDelete = (userId) => {
-    const url = `http://localhost:5000/users/${userId}`;
+    const url = `https://tranquil-bastion-41948.herokuapp.com/users/${userId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allUsers.filter((user) => user._id !== userId);

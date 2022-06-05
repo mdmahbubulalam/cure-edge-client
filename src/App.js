@@ -19,12 +19,24 @@ import PrivateOutlet from "./PrivateOutlet/PrivateOutlet";
 import MakeAdmin from "./Pages/Admin/MakeAdmin/MakeAdmin";
 import ManageUsers from "./Pages/Admin/ManageUsers/ManageUsers";
 import NoMatch from "./Shared/NoMatch/NoMatch";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/signIn" element={<SignIn />} />
+        <Route
+          path="profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<NoMatch />} />
         <Route path="/*" element={<PrivateOutlet />}>
           <Route path="admin" element={<Admin />} />
           <Route path="dashboard" element={<DashBoard />} />
@@ -40,13 +52,6 @@ function App() {
           <Route path="manageUsers" element={<ManageUsers />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
-        <Route path="/signIn" element={<SignIn />} />
-        <Route path="/profile" element={<Profile />} />
-        
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NoMatch />} />
-        
-
       </Routes>
     </AuthProvider>
   );

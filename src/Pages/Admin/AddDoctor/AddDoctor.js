@@ -61,7 +61,7 @@ const AddDoctor = () => {
     };
     console.log(formData);
     axios
-      .post("http://localhost:5000/addDoctor", formData)
+      .post("https://tranquil-bastion-41948.herokuapp.com/addDoctor", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setOpen(true);

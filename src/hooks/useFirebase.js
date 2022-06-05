@@ -11,7 +11,6 @@ import {
   updateProfile,
   getIdToken,
 } from "firebase/auth";
-import { AdminPanelSettingsTwoTone } from "@mui/icons-material";
 
 //initialize firebase app
 initializeFirebase();
@@ -21,16 +20,15 @@ const useFirebase = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState("");
   const [successText, setSuccessText] = useState("");
-  const [admin, setAdmin] = useState('');
+  const [admin, setAdmin] = useState("");
 
   const auth = getAuth();
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (user) => {
       if (user) {
-        getIdToken(user).then((idToken,admin) =>
+        getIdToken(user).then((idToken, admin) =>
           localStorage.setItem("idToken", idToken)
-
         );
         setUser(user);
       } else {
@@ -48,13 +46,14 @@ const useFirebase = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        saveUser(email, name, 'POST');
+        saveUser(email, name, "POST");
+        console.log(email, name);
         updateProfile(auth.user, {
           displayName: name,
         });
         const user = userCredential.user;
         setUser(user);
-        console.log(user);
+        
         setSuccessText("User created successfully");
         setAuthError("");
       })
@@ -69,12 +68,10 @@ const useFirebase = () => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        
         const user = userCredential.user;
         setAuthError("");
         let from = location.state?.from?.pathname || "/";
         navigate(from);
-        
       })
       .catch((error) => {
         const errorMessage = error.code;
@@ -87,15 +84,13 @@ const useFirebase = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        saveUser(user.email, user.displayName,  'PUT');
+        saveUser(user.email, user.displayName, "PUT");
         setAuthError("");
         let from = location.state?.from?.pathname || "/";
         navigate(from);
-        
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -128,8 +123,8 @@ const useFirebase = () => {
   };
 
   const saveUser = (email, displayName, method) => {
-    const user = { email, displayName};
-    const url = "http://localhost:5000/addUser";
+    const user = { email, displayName };
+    const url = "https://tranquil-bastion-41948.herokuapp.com/addUser";
     fetch(url, {
       method: method,
       headers: {
@@ -139,19 +134,18 @@ const useFirebase = () => {
     }).then();
   };
 
-
-  useEffect(()=>{
-    const url = `http://localhost:5000/users/${user.email}`;
+  useEffect(() => {
+    const url = `https://tranquil-bastion-41948.herokuapp.com/users/${user.email}`;
     fetch(url)
-      .then(res => res.json())
-      .then(data =>setAdmin(data.admin));
-  },[user.email])
+      .then((res) => res.json())
+      .then((data) => setAdmin(data.admin));
+  }, [user.email]);
 
   useEffect(() => {
     setTimeout(() => {
-      setSuccessText('');
-      setAuthError('')
-    }, 3000);
+      setSuccessText("");
+      setAuthError("");
+    }, 5000);
   });
 
   return {

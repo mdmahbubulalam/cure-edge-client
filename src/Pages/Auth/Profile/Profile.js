@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import logo from "../../../assets/logo.gif";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -35,33 +35,49 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Profile = () => {
   let { user } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [allAppoinments, setAllAppoinments] = useState([]);
+  const [singleUser, setSingleUser] = useState([]);
   useEffect(() => {
-    const url = "http://localhost:5000/appoinmentByUser?email=" + user.email;
+    const url =
+      "https://tranquil-bastion-41948.herokuapp.com/appoinmentByUser?email="+user.email;
     fetch(url, {
-      headers:{
-        'content-type' : 'application/json',
-        'authorization' : `Bearer ${localStorage.getItem('idToken')}`
-      }
-      
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("idToken")}`,
+      },
     })
-    
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      }else if(res.status === 401) {
-        navigate('/signIn')
-      }
-    })
-    .then(data => setAllAppoinments(data))
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else if (res.status === 401) {
+          navigate("/signIn");
+        }
+      })
+      .then((data) => {
+        setAllAppoinments(data);
+      });
   }, []);
 
-  const charge = allAppoinments.map(
+  useEffect(()=>{
+    fetch(`https://tranquil-bastion-41948.herokuapp.com/singleUser/${user.email}`,{
+      method:'GET',
+      headers:{
+        'content-type' : 'application/json',
+        //'authorization' : `Bearer ${localStorage.getItem('idToken')}`
+      }
+    })
+    .then( (res) => res.json())
+    .then( data => {
+      setSingleUser(data);
+    })
+  },[])
+
+  const charge = allAppoinments?.map(
     (appoinment) =>
       appoinment.status !== "Done" && parseInt(appoinment.serviceCharge)
   );
-  const totalCharge = charge.reduce((partialSum, a) => partialSum + a, 0);
+  const totalCharge = charge?.reduce((partialSum, a) => partialSum + a, 0);
 
   let count = 1;
 
@@ -72,65 +88,84 @@ const Profile = () => {
           <img src={logo} alt="" srcset="" style={{ width: "150px" }} />
         </Link>
       </Container>
-      <Container sx={{ textAlign:'start' , color:'#4B77AD'}}>
+      <Container sx={{ textAlign: "center", color: "#4B77AD" }}>
         <Typography variant="subtitle2" gutterBottom component="div">
-          <span style={{color:'green',fontWeight:'600'}}>Congratulations</span>, <span style={{color:'#39B5FF', fontWeight:'bold'}}>{user.displayName}</span>!!! <br />
-          <span style={{fontWeight:'600'}}>Thanks for choosing our service. Your total service charge is - ${totalCharge}</span>
-          
+          <span style={{ color: "green", fontWeight: "600" }}>
+            {allAppoinments?.length ? "Congratulations" : "Hi"}
+          </span>
+          ,{" "}
+          <span style={{ color: "#39B5FF", fontWeight: "bold" }}>
+            {user?.displayName || singleUser?.displayName  || user?.email}
+          </span>
+          !!! <br />
+          {allAppoinments?.length ? (
+            <span style={{ fontWeight: "600" }}>
+              Thanks for choosing our service. Your total service charge is - $
+              {totalCharge}.
+            </span>
+          ) : (
+            <span style={{ fontWeight: "600" }}>
+              You haven't booked any appointment yet!!!
+            </span>
+          )}
         </Typography>
       </Container>
-      <Container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#E7EBF0",
-          borderRadius: "10px",
-        }}
-      >
-        <TableContainer
-          component={Paper}
-          sx={{ marginTop: "24px", marginBottom: "24px" }}
+      {allAppoinments?.length && (
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "#E7EBF0",
+            borderRadius: "10px",
+          }}
         >
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>id</StyledTableCell>
-                <StyledTableCell>Name</StyledTableCell>
-                <StyledTableCell>Email</StyledTableCell>
-                <StyledTableCell>Phone</StyledTableCell>
-                <StyledTableCell>Age</StyledTableCell>
-                <StyledTableCell>Sex</StyledTableCell>
-                <StyledTableCell>Service</StyledTableCell>
-                <StyledTableCell>Hospital</StyledTableCell>
-                <StyledTableCell>Symptoms</StyledTableCell>
-                <StyledTableCell>Address</StyledTableCell>
-                <StyledTableCell>Date & Time</StyledTableCell>
-                <StyledTableCell>Service Charge</StyledTableCell>
-                <StyledTableCell>Status</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {allAppoinments.map((appoinment, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell>{count++}</StyledTableCell>
-                  <StyledTableCell>{appoinment.patientName}</StyledTableCell>
-                  <StyledTableCell>{appoinment.email}</StyledTableCell>
-                  <StyledTableCell>{appoinment.phone}</StyledTableCell>
-                  <StyledTableCell>{appoinment.age}</StyledTableCell>
-                  <StyledTableCell>{appoinment.gender}</StyledTableCell>
-                  <StyledTableCell>{appoinment.service}</StyledTableCell>
-                  <StyledTableCell>{appoinment.hospital}</StyledTableCell>
-                  <StyledTableCell>{appoinment.symptoms}</StyledTableCell>
-                  <StyledTableCell>{appoinment.address}</StyledTableCell>
-                  <StyledTableCell>{appoinment.dateTime}</StyledTableCell>
-                  <StyledTableCell>${appoinment.serviceCharge}</StyledTableCell>
-                  <StyledTableCell>{appoinment.status}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
+          <TableContainer
+            component={Paper}
+            sx={{ marginTop: "24px", marginBottom: "24px" }}
+          >
+            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>id</StyledTableCell>
+                  <StyledTableCell>Name</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell>Phone</StyledTableCell>
+                  <StyledTableCell>Age</StyledTableCell>
+                  <StyledTableCell>Gender</StyledTableCell>
+                  <StyledTableCell>Service</StyledTableCell>
+                  <StyledTableCell>Hospital</StyledTableCell>
+                  <StyledTableCell>Symptoms</StyledTableCell>
+                  <StyledTableCell>Address</StyledTableCell>
+                  <StyledTableCell>Date & Time</StyledTableCell>
+                  <StyledTableCell>Service Charge</StyledTableCell>
+                  <StyledTableCell>Status</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {allAppoinments?.map((appoinment, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>{count++}</StyledTableCell>
+                    <StyledTableCell>{appoinment.patientName}</StyledTableCell>
+                    <StyledTableCell>{appoinment.email}</StyledTableCell>
+                    <StyledTableCell>{appoinment.phone}</StyledTableCell>
+                    <StyledTableCell>{appoinment.age}</StyledTableCell>
+                    <StyledTableCell>{appoinment.gender}</StyledTableCell>
+                    <StyledTableCell>{appoinment.service}</StyledTableCell>
+                    <StyledTableCell>{appoinment.hospital}</StyledTableCell>
+                    <StyledTableCell>{appoinment.symptoms}</StyledTableCell>
+                    <StyledTableCell>{appoinment.address}</StyledTableCell>
+                    <StyledTableCell>{appoinment.dateTime}</StyledTableCell>
+                    <StyledTableCell>
+                      ${appoinment.serviceCharge}
+                    </StyledTableCell>
+                    <StyledTableCell>{appoinment.status}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Container>
+      )}
     </>
   );
 };

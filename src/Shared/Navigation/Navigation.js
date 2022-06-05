@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Scroll from "react-scroll";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -28,6 +28,21 @@ import useAuth from "../../hooks/useAuth";
 
 const Navigation = () => {
   let { user, logOut } = useAuth();
+  const [singleUser, setSingleUser] = useState([]);
+  
+  useEffect(()=>{
+    fetch(`https://tranquil-bastion-41948.herokuapp.com/singleUser/${user.email}`,{
+      method:'GET',
+      headers:{
+        'content-type' : 'application/json',
+        //'authorization' : `Bearer ${localStorage.getItem('idToken')}`
+      }
+    })
+    .then( (res) => res.json())
+    .then( data => {
+      setSingleUser(data);
+    })
+  },[])
 
   let LinkNav = Scroll.Link;
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -303,6 +318,27 @@ const Navigation = () => {
                   Contact
                 </Button>
               </LinkNav>
+              <Link
+                to="/admin"
+                style={{
+                  fontWeight: "500",
+                  cursor: "pointer",
+                  textDecoration:'none'
+                }}
+              >
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    mx: 0,
+                    display: "block",
+                    width: "100%",
+                    color: "#1976D2",
+                    textAlign: "start",
+                  }}
+                >
+                  Admin
+                </Button>
+              </Link>
             </Menu>
           </Box>
           <Typography
@@ -477,6 +513,22 @@ const Navigation = () => {
                 Contact
               </LinkNav>
             </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ mx: 0, display: "block" }}
+            >
+              <Link
+                to="/admin"
+                style={{
+                  color: "#1976D2",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  textDecoration:'none'
+                }}
+              >
+                Admin
+              </Link>
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -504,7 +556,7 @@ const Navigation = () => {
               >
                 <Link to="/profile" style={{ textDecoration: "none" }}>
                   <MenuItem onClick={handleCloseUserMenu}>
-                    {user.displayName || user.email}
+                    {user?.displayName || singleUser?.displayName || user?.email}
                   </MenuItem>
                 </Link>
                 <Typography onClick={logOut}>

@@ -155,7 +155,7 @@ const SignIn = () => {
                   {authError && <Alert severity="error">{authError}</Alert>}
 
                   {successText && (
-                    <Alert severity="success" autoHideDuration={6000} >{successText}</Alert>
+                    <Alert severity="success" >{successText}</Alert>
                   )}
 
                   <form onSubmit={handleSubmit(onSubmit)}>

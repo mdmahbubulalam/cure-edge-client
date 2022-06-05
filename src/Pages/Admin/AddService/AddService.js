@@ -54,7 +54,7 @@ const AddService = () => {
     };
     
     axios
-      .post("http://localhost:5000/addService", formData)
+      .post("https://tranquil-bastion-41948.herokuapp.com/addService", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setOpen(true);

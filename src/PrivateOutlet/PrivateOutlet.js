@@ -19,7 +19,7 @@ const PrivateOutlet = () => {
   if (admin){
     return <Outlet />;
   }else{
-    return <NoMatch/>;
+    return <NoMatch />;
   }
   
   
