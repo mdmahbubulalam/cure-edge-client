@@ -5,16 +5,19 @@ import { Container } from "@mui/material";
 import Service from "../Service/Service";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Services = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    axios.get("https://tranquil-bastion-41948.herokuapp.com/services").then(function (res) {
-      if (res.data) {
-        setServices(res.data);
-      }
-    });
+    axios
+      .get("https://tranquil-bastion-41948.herokuapp.com/services")
+      .then(function (res) {
+        if (res.data) {
+          setServices(res.data);
+        }
+      });
   }, []);
 
   return (
@@ -34,11 +37,17 @@ const Services = () => {
           Our Services
         </Typography>
         <Grid container spacing={{ xs: 2, md: 3 }}>
-          {services.map((service, index) => (
-            <Grid item xs={12} sm={12} md={6} lg={4} key={index}>
-              <Service service={service} />
+          {services.length ? (
+            services.map((service, index) => (
+              <Grid item xs={12} sm={12} md={6} lg={4} key={index}>
+                <Service service={service} />
+              </Grid>
+            ))
+          ) : (
+            <Grid item md={12} sx={{textAlign:'center'}}>
+              <CircularProgress />
             </Grid>
-          ))}
+          )}
         </Grid>
       </Container>
     </Box>

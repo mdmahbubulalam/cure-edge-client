@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { Container, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import Testimonial from "../Testimonial/Testimonial";
 import Slider from "react-slick/lib/slider";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Testimonials = () => {
   const [allReviews, setAllReviews] = useState([]);
@@ -80,15 +81,20 @@ const Testimonials = () => {
         >
           Testimonials
         </Typography>
-
-        <Slider {...settings}>
-          {allReviews.map(
-            (testimonial, index) =>
-              testimonial.status === "Published" && (
-                <Testimonial key={index} testimonial={testimonial} />
-              )
-          )}
-        </Slider>
+        {allReviews.length ? (
+          <Slider {...settings}>
+            {allReviews.map(
+              (testimonial, index) =>
+                testimonial.status === "Published" && (
+                  <Testimonial key={index} testimonial={testimonial} />
+                )
+            )}
+          </Slider>
+        ) : (
+          <Grid item md={12} sx={{ textAlign: "center" }}>
+            <CircularProgress />
+          </Grid>
+        )}
       </Container>
     </Box>
   );
