@@ -64,7 +64,7 @@ const ManageReviews = () => {
   };
 
   useEffect(()=>{
-    fetch("https://tranquil-bastion-41948.herokuapp.com/reviews",{
+    fetch("https://cure-edge-server.onrender.com/reviews",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -87,7 +87,7 @@ const ManageReviews = () => {
 
     const modifiedStatus = { id, status };
 
-    const url = `https://tranquil-bastion-41948.herokuapp.com/updateReviewStatus`;
+    const url = `https://cure-edge-server.onrender.com/updateReviewStatus`;
     fetch(url, {
       method: "PATCH",
       headers: {
@@ -99,7 +99,7 @@ const ManageReviews = () => {
   };
 
   const handleDelete = (reviewId) => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/reviews/${reviewId}`;
+    const url = `https://cure-edge-server.onrender.com/reviews/${reviewId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allReviews.filter(

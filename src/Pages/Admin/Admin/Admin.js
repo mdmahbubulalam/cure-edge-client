@@ -22,7 +22,7 @@ const Admin = () => {
   const appoinmentDone = [];
 
   useEffect(()=>{
-    fetch("https://tranquil-bastion-41948.herokuapp.com/appoinments",{
+    fetch("https://cure-edge-server.onrender.com/appoinments",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -37,7 +37,7 @@ const Admin = () => {
   },[])
 
   useEffect(()=>{
-    fetch("https://tranquil-bastion-41948.herokuapp.com/users",{
+    fetch("https://cure-edge-server.onrender.com/users",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',

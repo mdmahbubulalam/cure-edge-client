@@ -46,7 +46,7 @@ const Contact = () => {
     };
     
     axios
-      .post("https://tranquil-bastion-41948.herokuapp.com/addReview", formData)
+      .post("https://cure-edge-server.onrender.com/addReview", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setSuccessMessage("Thanks for the review.");

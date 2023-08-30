@@ -85,7 +85,7 @@ const ManageUsers = () => {
   };
 
   useEffect(()=>{
-    fetch("https://tranquil-bastion-41948.herokuapp.com/users",{
+    fetch("https://cure-edge-server.onrender.com/users",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -108,7 +108,7 @@ const ManageUsers = () => {
 
     const modifiedStatus = { email, role };
 
-    const url = `https://tranquil-bastion-41948.herokuapp.com/users/role`;
+    const url = `https://cure-edge-server.onrender.com/users/role`;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -121,7 +121,7 @@ const ManageUsers = () => {
   
 
   const handleDelete = (userId) => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/users/${userId}`;
+    const url = `https://cure-edge-server.onrender.com/users/${userId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allUsers.filter((user) => user._id !== userId);

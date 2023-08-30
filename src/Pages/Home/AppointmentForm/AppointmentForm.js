@@ -55,7 +55,7 @@ const AppointmentForm = () => {
 
   useEffect(() => {
     axios
-      .get("https://tranquil-bastion-41948.herokuapp.com/services")
+      .get("https://cure-edge-server.onrender.com/services")
       .then(function (res) {
         if (res.data) {
           setServices(res.data);
@@ -64,7 +64,7 @@ const AppointmentForm = () => {
   }, []);
 
   useEffect(()=>{
-    fetch(`https://tranquil-bastion-41948.herokuapp.com/singleUser/${user.email}`,{
+    fetch(`https://cure-edge-server.onrender.com/singleUser/${user.email}`,{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -79,7 +79,7 @@ const AppointmentForm = () => {
 
   useEffect(() => {
     axios
-      .get("https://tranquil-bastion-41948.herokuapp.com/hospitals")
+      .get("https://cure-edge-server.onrender.com/hospitals")
       .then(function (res) {
         if (res.data) {
           setHospitals(res.data);
@@ -105,7 +105,7 @@ const AppointmentForm = () => {
 
     axios
       .post(
-        "https://tranquil-bastion-41948.herokuapp.com/addAppoinment",
+        "https://cure-edge-server.onrender.com/addAppoinment",
         formData
       )
       .then(function (res) {

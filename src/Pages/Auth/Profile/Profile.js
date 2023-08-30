@@ -40,7 +40,7 @@ const Profile = () => {
   const [singleUser, setSingleUser] = useState([]);
   useEffect(() => {
     const url =
-      "https://tranquil-bastion-41948.herokuapp.com/appoinmentByUser?email="+user.email;
+      "https://cure-edge-server.onrender.com/appoinmentByUser?email="+user.email;
     fetch(url, {
       headers: {
         "content-type": "application/json",
@@ -60,7 +60,7 @@ const Profile = () => {
   }, []);
 
   useEffect(()=>{
-    fetch(`https://tranquil-bastion-41948.herokuapp.com/singleUser/${user.email}`,{
+    fetch(`https://cure-edge-server.onrender.com/singleUser/${user.email}`,{
       method:'GET',
       headers:{
         'content-type' : 'application/json',

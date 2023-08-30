@@ -12,7 +12,7 @@ const Services = () => {
 
   useEffect(() => {
     axios
-      .get("https://tranquil-bastion-41948.herokuapp.com/services")
+      .get("https://cure-edge-server.onrender.com/services")
       .then(function (res) {
         if (res.data) {
           setServices(res.data);

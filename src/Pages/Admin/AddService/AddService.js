@@ -54,7 +54,7 @@ const AddService = () => {
     };
     
     axios
-      .post("https://tranquil-bastion-41948.herokuapp.com/addService", formData)
+      .post("https://cure-edge-server.onrender.com/addService", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setOpen(true);

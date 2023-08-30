@@ -8,7 +8,7 @@ import axios from "axios";
     const [appoinmentDetails, setAppoinmentDetails] = useState([]);
   
     useEffect(() => {
-      const url = `https://tranquil-bastion-41948.herokuapp.com/appoinments/${appoinmentId}`;
+      const url = `https://cure-edge-server.onrender.com/appoinments/${appoinmentId}`;
       axios.get(url).then((res) => {
         if (res.data) {
             setAppoinmentDetails(res.data)

@@ -76,7 +76,7 @@ const ManageHospitals = () => {
   };
 
   useEffect(()=>{
-    axios.get("https://tranquil-bastion-41948.herokuapp.com/hospitals").then(function (res) {
+    axios.get("https://cure-edge-server.onrender.com/hospitals").then(function (res) {
       if (res.data) {
         res.data.sort((a, b) => (new Date(a) < new Date(b) ? 1 : -1));
         setAllHospitals(res.data);
@@ -87,7 +87,7 @@ const ManageHospitals = () => {
   
 
   const handleDelete = (hospitalId) => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/hospitals/${hospitalId}`;
+    const url = `https://cure-edge-server.onrender.com/hospitals/${hospitalId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allHospitals.filter((allHospital) => allHospital._id !== hospitalId);

@@ -9,7 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const OurSpecialists = () => {
   const [ourSpecialists, setOurSpecialists] = useState([]);
   axios
-    .get("https://tranquil-bastion-41948.herokuapp.com/doctors")
+    .get("https://cure-edge-server.onrender.com/doctors")
     .then(function (res) {
       if (res.data) {
         setOurSpecialists(res.data);

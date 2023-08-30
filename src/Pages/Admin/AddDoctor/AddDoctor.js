@@ -61,7 +61,7 @@ const AddDoctor = () => {
     };
     console.log(formData);
     axios
-      .post("https://tranquil-bastion-41948.herokuapp.com/addDoctor", formData)
+      .post("https://cure-edge-server.onrender.com/addDoctor", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setOpen(true);

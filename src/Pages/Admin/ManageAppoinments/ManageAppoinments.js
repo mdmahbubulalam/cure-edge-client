@@ -81,7 +81,7 @@ const ManageAppoinments = () => {
 
 
   useEffect(()=>{
-    fetch("https://tranquil-bastion-41948.herokuapp.com/appoinments",{
+    fetch("https://cure-edge-server.onrender.com/appoinments",{
       method:'GET',
       headers:{
         'content-type' : 'application/json',
@@ -96,7 +96,7 @@ const ManageAppoinments = () => {
   },[])
 
   const handleDelete = (appoinmentId) => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/appoinments/${appoinmentId}`;
+    const url = `https://cure-edge-server.onrender.com/appoinments/${appoinmentId}`;
     axios.delete(url).then((res) => {
       if (res.data.deletedCount) {
         const remaining = allAppoinments.filter(
@@ -132,7 +132,7 @@ const ManageAppoinments = () => {
 
     const modifiedStatus = { id, status };
 
-    const url = `https://tranquil-bastion-41948.herokuapp.com/updateAppoinmentStatus`;
+    const url = `https://cure-edge-server.onrender.com/updateAppoinmentStatus`;
     fetch(url, {
       method: "PATCH",
       headers: {

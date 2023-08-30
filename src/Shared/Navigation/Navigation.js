@@ -31,7 +31,7 @@ const Navigation = () => {
   const [singleUser, setSingleUser] = useState([]);
   
   useEffect(()=>{
-    fetch(`https://tranquil-bastion-41948.herokuapp.com/singleUser/${user.email}`,{
+    fetch(`https://cure-edge-server.onrender.com/singleUser/${user.email}`,{
       method:'GET',
       headers:{
         'content-type' : 'application/json',

@@ -48,7 +48,7 @@ const AddHospital = () => {
       hospitalName: data.hospitalName,
     };
     axios
-      .post("https://tranquil-bastion-41948.herokuapp.com/addHospital", formData)
+      .post("https://cure-edge-server.onrender.com/addHospital", formData)
       .then(function (res) {
         if (res.data.insertedId) {
           setOpen(true);

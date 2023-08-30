@@ -28,7 +28,7 @@ const EditHospital = (props) => {
   };
 
   useEffect(() => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/hospitals/${hospitalId}`;
+    const url = `https://cure-edge-server.onrender.com/hospitals/${hospitalId}`;
     axios.get(url).then((res) => {
       if (res.data) {
         setHospitalName(res.data.hospitalName);
@@ -49,7 +49,7 @@ const EditHospital = (props) => {
       hospitalName,
     };
 
-    const url = `https://tranquil-bastion-41948.herokuapp.com/hospitals/${hospitalId}`;
+    const url = `https://cure-edge-server.onrender.com/hospitals/${hospitalId}`;
     fetch(url, {
       method: "PUT",
       headers: {

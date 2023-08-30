@@ -32,7 +32,7 @@ const EditService = (props) => {
   };
 
   useEffect(() => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/services/${serviceId}`;
+    const url = `https://cure-edge-server.onrender.com/services/${serviceId}`;
     axios.get(url).then((res) => {
       if (res.data) {
         setServiceName(res.data.serviceName);
@@ -59,7 +59,7 @@ const EditService = (props) => {
       image: imgUrl,
     };
 
-    const url = `https://tranquil-bastion-41948.herokuapp.com/services/${serviceId}`;
+    const url = `https://cure-edge-server.onrender.com/services/${serviceId}`;
     fetch(url, {
       method: "PUT",
       headers: {

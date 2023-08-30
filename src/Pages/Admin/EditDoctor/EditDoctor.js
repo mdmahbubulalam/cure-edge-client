@@ -33,7 +33,7 @@ const EditDoctor = (props) => {
   };
 
   useEffect(() => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/doctors/${doctorId}`;
+    const url = `https://cure-edge-server.onrender.com/doctors/${doctorId}`;
     axios.get(url).then((res) => {
       if (res.data) {
         setDoctorName(res.data.doctorName);
@@ -64,7 +64,7 @@ const EditDoctor = (props) => {
       image: imgUrl,
     };
 
-    const url = `https://tranquil-bastion-41948.herokuapp.com/doctors/${doctorId}`;
+    const url = `https://cure-edge-server.onrender.com/doctors/${doctorId}`;
     fetch(url, {
       method: "PUT",
       headers: {

@@ -45,7 +45,7 @@ const Testimonials = () => {
   };
 
   useEffect(() => {
-    fetch("https://tranquil-bastion-41948.herokuapp.com/reviews", {
+    fetch("https://cure-edge-server.onrender.com/reviews", {
       method: "GET",
       headers: {
         "content-type": "application/json",

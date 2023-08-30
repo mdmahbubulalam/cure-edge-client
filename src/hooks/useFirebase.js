@@ -124,7 +124,7 @@ const useFirebase = () => {
 
   const saveUser = (email, displayName, method) => {
     const user = { email, displayName };
-    const url = "https://tranquil-bastion-41948.herokuapp.com/addUser";
+    const url = "https://cure-edge-server.onrender.com/addUser";
     fetch(url, {
       method: method,
       headers: {
@@ -135,7 +135,7 @@ const useFirebase = () => {
   };
 
   useEffect(() => {
-    const url = `https://tranquil-bastion-41948.herokuapp.com/users/${user.email}`;
+    const url = `https://cure-edge-server.onrender.com/users/${user.email}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setAdmin(data.admin));
